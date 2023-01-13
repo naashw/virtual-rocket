@@ -2,7 +2,11 @@
   "name": "rocket",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build:api": "nx build api",
+    "start:api": "nx serve api",
+    "start:api:prod": "node dist/main.js"
+  },
   "private": true,
   "dependencies": {
     "@nestjs/common": "^9.0.0",
