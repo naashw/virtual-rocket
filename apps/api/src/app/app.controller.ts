@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 
 import { AppService } from './app.service';
+import { PrismaClient } from '@prisma/client';
 
 @Controller()
 export class AppController {
@@ -8,6 +9,6 @@ export class AppController {
 
   @Get()
   getData() {
-    return this.appService.getData();
+    return this.appService.setData();
   }
 }
