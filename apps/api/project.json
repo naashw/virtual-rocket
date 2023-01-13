@@ -16,6 +16,17 @@
         "assets": ["apps/api/src/assets"]
       },
       "configurations": {
+        "local": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/api/src/environments/environment.ts",
+              "with": "apps/api/src/environments/environment.local.ts"
+            }
+          ]
+        },
         "production": {
           "optimization": true,
           "extractLicenses": true,
@@ -35,6 +46,9 @@
         "buildTarget": "api:build"
       },
       "configurations": {
+        "local": {
+          "buildTarget": "api:build:local"
+        },
         "production": {
           "buildTarget": "api:build:production"
         }
