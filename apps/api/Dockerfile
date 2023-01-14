@@ -26,4 +26,3 @@ COPY --from=build /api/node_modules ./node_modules
 RUN chmod +x entrypoint.sh
 
 ENTRYPOINT ["/api/entrypoint.sh"]
-CMD ["sh"]
