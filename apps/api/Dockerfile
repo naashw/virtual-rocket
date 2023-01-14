@@ -15,14 +15,15 @@ FROM base AS build
 WORKDIR /api
 COPY . .
 COPY --from=dependencies /api/node_modules ./node_modules
-ENV DATABASE_URL=${DATABASE_URL}
-RUN npx prisma generate
-RUN npx prisma migrate deploy
 
 FROM base AS deploy
 
 WORKDIR /api
-ENV DATABASE_URL=${DATABASE_URL}
 COPY dist/ ./
+COPY ./entrypoint.sh ./
+COPY prisma/ ./
 COPY --from=build /api/node_modules ./node_modules
-CMD node /api/main.js
+RUN chmod +x entrypoint.sh
+
+ENTRYPOINT ["/api/entrypoint.sh"]
+CMD ["sh"]

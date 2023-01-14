@@ -15,7 +15,7 @@
         "tsConfig": "apps/api/tsconfig.app.json",
         "assets": ["apps/api/src/assets"],
         "generatePackageJson": true,
-        "envFile": "apps/api/.env"
+        "envFile": ".env"
       },
       "configurations": {
         "local": {
