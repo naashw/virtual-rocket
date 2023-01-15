@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "dev:api": "npm run start:api:dev",
     "build:api": "nx build api",
-    "start:api": "nx serve api",
-    "start:api:prod": "node dist/main.js"
+    "start:api:dev": "npm run build:api && docker-compose -f ./docker-compose.dev.yml up --force-recreate --build",
+    "start:api:prod": "docker-compose -f ./docker-compose.yml up --force-recreate --build"
   },
   "private": true,
   "dependencies": {

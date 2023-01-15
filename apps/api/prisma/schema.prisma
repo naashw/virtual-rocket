@@ -11,3 +11,16 @@ model user {
   id String @id @default(cuid())
   name String
 }
+
+model virtualtour {
+  id String @id @default(cuid())
+  name String
+  virtualrooms virtualroom[]
+}
+
+model virtualroom {
+  id String @id @default(cuid())
+  name String
+  virtualtourId String
+  virtualtour virtualtour @relation(fields: [virtualtourId], references: [id])
+}

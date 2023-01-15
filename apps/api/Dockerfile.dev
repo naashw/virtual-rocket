@@ -3,14 +3,13 @@ FROM node:18-alpine AS base
 
 WORKDIR /api
 RUN npm i -g pnpm
-RUN npm install -g @nestjs/cli
+RUN npm i -g nx
 
 FROM base AS dependencies
 
-COPY dist/ .
-RUN pnpm install --frozen-lockfile
+COPY apps/api/dist/ .
+RUN pnpm install
 
 FROM base AS deploy
 
 COPY . .
-COPY --from=dependencies /api/node_modules ./node_modules

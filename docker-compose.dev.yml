@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   db:
     container_name: postgres
@@ -10,20 +11,22 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - /var/lib/postgresql
+      - postgresdb:/data/db
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U postgres -d api-db']
       interval: 1s
       timeout: 5s
       retries: 20
+    networks:
+      - localnetwork
 
   pgadmin4:
     ports:
       - '5050:80'
 
     environment:
-      - PGADMIN_DEFAULT_EMAIL=rocket@local.fr
-      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_DEFAULT_EMAIL=local@rocket.fr
+      - PGADMIN_DEFAULT_PASSWORD=password
     container_name: pgadmin4
     image: dpage/pgadmin4
     depends_on:
@@ -32,17 +35,27 @@ services:
 
   api:
     container_name: api
-    hostname: myhostname
     env_file:
-      - ../../.env
+      - .env
     environment:
-      - DATABASE_URL=${DATABASE_URL}
-    build: .
+      - DATABASE_URL=${POSTGRES_URL}
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile.dev
+    command: npm run dev:api
+    restart: 'no'
+    ports:
+      - 3333:3333
+    entrypoint: ['apps/api/entrypoint.sh', 'DEV']
     depends_on:
       db:
         condition: service_healthy
-    links:
-      - db
-    restart: always
-    ports:
-      - 3333:3333
+    networks:
+      - localnetwork
+
+networks:
+  localnetwork:
+    driver: bridge
+
+volumes:
+  postgresdb:

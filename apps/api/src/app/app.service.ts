@@ -12,8 +12,8 @@ export class AppService {
 
     const newDataTest = await prisma.user.create({
       data: {
-        name: 'Test',
-      },
+        name: 'dza ssdsada'
+      }
     });
 
     return newDataTest.name;
