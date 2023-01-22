@@ -9,6 +9,6 @@ export class AppController {
 
   @Get()
   getData() {
-    return this.appService.setData();
+    return this.appService.getData();
   }
 }

@@ -7,20 +7,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
+model Identifier {
   id String @id @default(cuid())
-  name String
+  name String @unique @default(dbgenerated("nanoid()"))
+  code String @default(dbgenerated("nanoid()"))
+  empty Boolean @default(true)
+  virtualtour Virtualtour?
 }
 
-model virtualtour {
+
+model Virtualtour {
   id String @id @default(cuid())
   name String
-  virtualrooms virtualroom[]
+  identifier Identifier @relation(fields: [identifierName], references: [name])
+  identifierName String @unique
+  virtualrooms Virtualroom[]
 }
 
-model virtualroom {
+model Virtualroom {
   id String @id @default(cuid())
   name String
   virtualtourId String
-  virtualtour virtualtour @relation(fields: [virtualtourId], references: [id])
+  virtualtour Virtualtour @relation(fields: [virtualtourId], references: [id])
 }
